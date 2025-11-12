@@ -192,6 +192,7 @@
             cursor: pointer;
             transition: var(--transition);
             position: relative;
+            text-decoration: none;
         }
 
         .app-icon {
@@ -230,6 +231,7 @@
             text-align: center;
             opacity: 0.9;
             font-weight: 500;
+            color: var(--light);
         }
 
         .app:hover .app-icon {
@@ -356,6 +358,7 @@
             gap: 8px;
             cursor: pointer;
             transition: var(--transition);
+            text-decoration: none;
         }
 
         .control-icon {
@@ -378,6 +381,7 @@
         .control-name {
             font-size: 12px;
             text-align: center;
+            color: var(--light);
         }
 
         .swipe-indicator {
@@ -533,26 +537,26 @@
                 <div class="date" id="current-date">Lundi 15 mai</div>
                 
                 <div class="apps-grid">
-                    <div class="app instagram notification" data-link="https://www.instagram.com/pro.designer.dz?igsh=MWFwaDRwamtpdmFwMw==">
+                    <a href="https://www.instagram.com/pro.designer.dz?igsh=MWFwaDRwamtpdmFwMw==" target="_blank" class="app instagram notification">
                         <div class="app-icon">
                             <i class="fab fa-instagram"></i>
                         </div>
                         <span class="app-name">Instagram</span>
-                    </div>
+                    </a>
                     
-                    <div class="app tiktok" data-link="https://www.tiktok.com/@thedesignero?_r=1&_t=ZS-91KoGNu0bSP">
+                    <a href="https://www.tiktok.com/@thedesignero?_r=1&_t=ZS-91KoGNu0bSP" target="_blank" class="app tiktok">
                         <div class="app-icon">
                             <i class="fab fa-tiktok"></i>
                         </div>
                         <span class="app-name">TikTok</span>
-                    </div>
+                    </a>
                     
-                    <div class="app whatsapp" data-link="https://wa.me/213669059738">
+                    <a href="https://wa.me/213669059738" target="_blank" class="app whatsapp">
                         <div class="app-icon">
                             <i class="fab fa-whatsapp"></i>
                         </div>
                         <span class="app-name">WhatsApp</span>
-                    </div>
+                    </a>
                 </div>
                 
                 <div class="dock">
@@ -586,33 +590,33 @@
                 </div>
                 
                 <div class="controls-grid">
-                    <div class="control-item" data-link="https://maps.google.com">
+                    <a href="https://maps.google.com" target="_blank" class="control-item">
                         <div class="control-icon">
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
                         <span class="control-name">Localisation</span>
-                    </div>
+                    </a>
                     
-                    <div class="control-item" data-link="mailto:prodesignerdz@example.com">
+                    <a href="mailto:prodesignerdz@example.com" class="control-item">
                         <div class="control-icon">
                             <i class="fas fa-envelope"></i>
                         </div>
                         <span class="control-name">Email</span>
-                    </div>
+                    </a>
                     
-                    <div class="control-item" data-link="https://prodesignerdz.com/portfolio">
+                    <a href="https://prodesignerdz.com/portfolio" target="_blank" class="control-item">
                         <div class="control-icon">
                             <i class="fas fa-briefcase"></i>
                         </div>
                         <span class="control-name">Portfolio</span>
-                    </div>
+                    </a>
                     
-                    <div class="control-item" data-link="https://calendly.com/prodesignerdz">
+                    <a href="https://calendly.com/prodesignerdz" target="_blank" class="control-item">
                         <div class="control-icon">
                             <i class="fas fa-calendar-alt"></i>
                         </div>
                         <span class="control-name">Rendez-vous</span>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -670,42 +674,6 @@
             swipeIndicator.classList.remove('hidden');
         });
         
-        // Gestion des clics sur les applications et contrôles - OUVRE LES LIENS
-        document.querySelectorAll('.app, .control-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                if (item.id === 'control-center-trigger') return;
-                
-                const link = item.getAttribute('data-link');
-                if (link) {
-                    // Animation de clic
-                    item.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        item.style.transform = '';
-                    }, 200);
-                    
-                    // OUVERTURE DU LIEN DANS UN NOUVEL ONGLET
-                    window.open(link, '_blank');
-                    
-                    // Animation de notification pour WhatsApp
-                    if (item.classList.contains('whatsapp')) {
-                        const dots = document.createElement('div');
-                        dots.innerHTML = '<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>';
-                        dots.style.position = 'absolute';
-                        dots.style.bottom = '-10px';
-                        dots.style.left = '50%';
-                        dots.style.transform = 'translateX(-50%)';
-                        dots.style.fontSize = '20px';
-                        dots.style.color = '#25D366';
-                        item.appendChild(dots);
-                        
-                        setTimeout(() => {
-                            dots.remove();
-                        }, 1500);
-                    }
-                }
-            });
-        });
-        
         // Animation de notification pour Instagram
         const instagramApp = document.querySelector('.instagram');
         setInterval(() => {
@@ -737,6 +705,18 @@
                 swipeIndicator.classList.add('hidden');
             }
         });
+
+        // Ajout d'un déclencheur pour le centre de contrôle
+        const controlCenterTrigger = document.createElement('div');
+        controlCenterTrigger.id = 'control-center-trigger';
+        controlCenterTrigger.className = 'app';
+        controlCenterTrigger.innerHTML = `
+            <div class="app-icon" style="background: linear-gradient(45deg, var(--primary), var(--accent));">
+                <i class="fas fa-sliders-h"></i>
+            </div>
+            <span class="app-name">Contrôles</span>
+        `;
+        document.querySelector('.apps-grid').appendChild(controlCenterTrigger);
     </script>
 </body>
 </html>
